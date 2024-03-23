@@ -58,7 +58,8 @@ docker run  -d -p 8443:8443 app_evaluacion
 
 En el Enlace se encuentra   la documentación de los Apis(Swagger UI)
 
-**Enlace : [http://localhost:8443/documentation]**
+**Enlace : **
+[**http://localhost:8443/documentation**].  o  [**http://localhost:8443/swagger-ui/index.html**]
 
 ## Opereraciones
 
