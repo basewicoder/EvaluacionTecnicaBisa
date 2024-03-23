@@ -31,7 +31,7 @@ WORKDIR /app
 COPY target/exam-0.0.1-SNAPSHOT.jar app.jar
 
 # Exponer el puerto en el que la aplicación se ejecuta dentro del contenedor
-EXPOSE 8443
+EXPOSE 8080
 
 # Comando para ejecutar la aplicación al iniciar el contenedor
 CMD ["java", "-jar", "app.jar"]
@@ -56,10 +56,10 @@ docker run  -d -p 8443:8443 app_evaluacion
 
 5. **Documentación de la API** (opcional): Incluida en el repositorio.
 
-En el Enlace se encuentra   la documentación de los Apis(Swagger UI)
+En el Enlace se encuentra   la documentación de los **Apis(Swagger UI)**
 
-**Enlace : **
-[**http://localhost:8443/documentation**].  o  [**http://localhost:8443/swagger-ui/index.html**]
+**Enlace :**
+[**http://localhost:8443/documentation**]. o[**http://localhost:8443/swagger-ui/index.html**]
 
 ## Opereraciones
 
@@ -103,7 +103,7 @@ Endpoint: **localhost:8443/api/v1/clientes**
 
 METODO: **POST**
 
-Nota: el endpoint puede crear cliente y persona
+**Nota**: el endpoint puede crear cliente y persona, cliente con **estado "CREADO"**
 
 REQUEST
 ```json
@@ -111,7 +111,6 @@ REQUEST
   "email": "ejemplo@correo.com",
   "telefono": "123456789",
   "ocupacion": "Desarrollador",
-  "estado": "CREADO",
   "persona": {
     "nombre": "Juan",
     "apellido": "Pérez González",
@@ -140,6 +139,34 @@ RESPONSE
 
 ```
 
+**Exception**  para el cliente meno a 20 años ,  cliente con **estado "CREADO"**
+
+
+**REQUEST:**
+```json 
+{
+  "email": "ejemplo@correo.com",
+  "telefono": "123456789",
+  "ocupacion": "Desarrollador",
+  "persona": {
+    "nombre": "Juan",
+    "apellido": "Pérez González",
+    "fechaNacimiento": "2005-01-01",
+    "direccion":"Calle los pinos",
+    "carnetIdentidad": "123456789"
+  }
+}
+
+```
+**RESPONSE**
+```json
+{
+	"msg": "El cliente no puede tener menos de 20 años.",
+	"code": "05",
+	"data": null
+}
+```
+
 
 **3  Añadir referencia personal para un cliente**
 
@@ -147,7 +174,7 @@ Endpoint: **localhost:8443/api/v1/clientes/1/referencias**
 
 METODO: **POST**
 
-Nota: el endpoint puede crear cliente y persona
+**Nota**: Cliente con **estado "ACTIVO"**
 
 REQUEST
 ```json
@@ -197,6 +224,8 @@ Endpoint: **localhost:8443/api/v1/clientes/1/referencias?motivo=Ninguna**
 
 METODO: **DELETE**
 
+**Nota**: Cliente con **estado "BLOQUEADO"**
+
 REQUEST: N/A
 
 RESPONSE:
@@ -231,7 +260,7 @@ Como se Elimino datos  ya solo quedaría nula
 
 Endpoint: **localhost:8443/api/v1/clientes/accesibilidad**
 
-METODO: **POST**
+METODO: **GET**
 
 REQUEST: N/A
 
@@ -262,7 +291,6 @@ REQUEST: N/A
 Caso accesible Buena :**accesibilidad**
 
 **"accesibilidad": "Regular"**
-
 ```json
 [
 	{
