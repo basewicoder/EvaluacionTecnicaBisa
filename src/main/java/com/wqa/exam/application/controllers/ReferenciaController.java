@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/")
+@CrossOrigin(origins = "*", maxAge = 20000)
 public class ReferenciaController {
 
     @Autowired
@@ -27,17 +28,11 @@ public class ReferenciaController {
     @PostMapping("referencia")
     public ResponseEntity<RestReturnEntity<ReferenciaDTO>> crearPersona(@RequestBody ReferenciaDTO referenciaDTO) {
         try {
-           // ClienteDTO cliente = clienteService.getById(referenciaDTO.getCliente().getId());
 
-           /* if (cliente != null) {
-                throw new NotFoundException("Cliente no encontrado");
-            }
-*/
             ReferenciaDTO referenciaPersonal = referenciaService.getById(referenciaDTO.getId());
             if (referenciaPersonal != null) {
                 throw new NotFoundException("Referencia personal no encontrada");
             }
-
             return RestReturn.ok(referenciaService.insert(referenciaDTO));
         } catch (EdadMinimaClienteException e) {
             return RestReturn.fail(e.getMessage());

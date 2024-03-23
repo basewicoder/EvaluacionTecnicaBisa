@@ -10,6 +10,7 @@ import com.wqa.exam.domain.data.ReferenciaDTO;
 import com.wqa.exam.domain.ports.api.ClienteService;
 import com.wqa.exam.domain.ports.api.ReferenciaService;
 import com.wqa.exam.infrastructure.entity.EstadoCliente;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/")
 @Slf4j
+@CrossOrigin(origins = "*", maxAge = 20000)
 public class ClienteController {
 
     private final ClienteService clienteService;
@@ -30,7 +32,7 @@ public class ClienteController {
     }
 
     @PostMapping("/clientes")
-    //Registrar a un cliente
+    @Operation(summary = "Registrar un Cliente y Persona",  tags = { "Cliente" })
     public ResponseEntity<RestReturnEntity<ClienteDTO>> crearCliente(@RequestBody ClienteDTO cliente) {
         try {
             return RestReturn.ok(clienteService.insertClientePersona(cliente));
@@ -40,11 +42,12 @@ public class ClienteController {
     }
 
     @PostMapping("/clientes/{clienteId}/referencias")
+    @Operation(summary = "Agregar referencia personal para un cliente",  tags = { "Cliente" })
     public ResponseEntity<RestReturnEntity<ClienteDTO>> añadirReferenciaPersonal(@PathVariable Long clienteId,
                                                                                  @RequestBody ReferenciaDTO referenciaPersonal) {
         try {
             ClienteDTO cliente = clienteService.getById(clienteId);
-            log.info("cliente, {}", cliente);
+
             if (cliente == null) {
                 throw new NotFoundException("Cliente no encontrado");
             } else {
@@ -58,7 +61,6 @@ public class ClienteController {
                     cliente.setEstado(EstadoCliente.ACTIVO);
                 }
             }
-            // return null;//
             return RestReturn.ok(clienteService.actualizar(cliente));
         } catch (NotFoundException e) {
             return RestReturn.fail(e.getMessage());
@@ -66,6 +68,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("/clientes/{clienteId}/referencias/{referenciaId}")
+    @Operation(summary = "Eliminar referencia personal de un cliente",  tags = { "Cliente" })
     public ResponseEntity<RestReturnEntity<ClienteDTO>> eliminarReferenciaPersonal(@PathVariable Long clienteId,
                                                                                    @PathVariable Long referenciaId,
                                                                                    @RequestParam String motivo) {
@@ -87,6 +90,7 @@ public class ClienteController {
     }
 
     @GetMapping("/clientes/accesibilidad")
+    @Operation(summary = "Listar cliente segun la accesibilidad",  tags = { "Cliente" })
     public List<ClienteDTO> accesibilidadCliente() {
         return clienteService.accesibilidadCliente();
     }
