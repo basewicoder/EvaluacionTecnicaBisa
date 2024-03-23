@@ -65,6 +65,7 @@ En el Enlace se encuentra   la documentación de los Apis(Swagger UI)
 **1  Crear Persona**
 
 Endpoint: **localhost:8443/api/v1/persona**
+
 METODO: **POST**
 
 REQUEST
@@ -98,6 +99,7 @@ RESPONSE
 **2 Crear Cliente**
 
 Endpoint: **localhost:8443/api/v1/clientes**
+
 METODO: **POST**
 
 Nota: el endpoint puede crear cliente y persona
@@ -141,6 +143,7 @@ RESPONSE
 **3  Añadir referencia personal para un cliente**
 
 Endpoint: **localhost:8443/api/v1/clientes/1/referencias**
+
 METODO: **POST**
 
 Nota: el endpoint puede crear cliente y persona
@@ -188,8 +191,11 @@ RESPONSE
 
 
 **4  Eliminar referencia personal de un cliente**
+
 Endpoint: **localhost:8443/api/v1/clientes/1/referencias?motivo=Ninguna**
-METODO: **POST**
+
+METODO: **DELETE**
+
 REQUEST: N/A
 
 RESPONSE:
@@ -223,7 +229,9 @@ RESPONSE:
 Como se Elimino datos  ya solo quedaría nula
 
 Endpoint: **localhost:8443/api/v1/clientes/accesibilidad**
+
 METODO: **POST**
+
 REQUEST: N/A
 
 **"accesibilidad": "Nula"**
@@ -253,6 +261,7 @@ REQUEST: N/A
 Caso accesible Buena :**accesibilidad**
 
 **"accesibilidad": "Regular"**
+
 ```json
 [
 	{
